@@ -5,6 +5,12 @@ A multi-threaded GUI application for batch OCR using the Google Drive API. It pr
 
 [Batch_VideoSubFinder](https://github.com/MrGamesKingPro/Batch_VideoSubFinder)
 
+
+##Main Tool interface##
+
+<img width="813" height="796" alt="Screenshot_2025-09-27_02-14-01" src="https://github.com/user-attachments/assets/195c9c82-f43a-47e2-956c-33ec8423327f" />
+
+
 ### Requirements
 
 1.  **Python 3.7+**
