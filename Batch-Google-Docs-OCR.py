@@ -68,7 +68,7 @@ class OcrApp(ctk.CTk):
     def __init__(self):
         super().__init__()
 
-        self.title("Batch Google Docs OCR V 1.0 By (MrGamesKingPro)")
+        self.title("Batch Google Docs OCR V 1.1 By (MrGamesKingPro)")
         self.geometry("800x800") 
         self.resizable(False, False)
         ctk.set_appearance_mode("Dark")
