@@ -8,68 +8,66 @@ A multi-threaded GUI application for batch OCR using the Google Drive API. It pr
 
 ##Main Tool interface##
 
-<img width="813" height="796" alt="Screenshot_2025-09-27_02-14-01" src="https://github.com/user-attachments/assets/195c9c82-f43a-47e2-956c-33ec8423327f" />
+<img width="819" height="854" alt="Screenshot_2026-03-20_18-43-11" src="https://github.com/user-attachments/assets/a016ab08-dc62-4544-9541-c0de16bf08b5" />
 
+
+### Key Features
+*   **Zero-Config Setup:** No need to manually install libraries; the script handles dependencies on the first run.
+*   **Built-in Credentials:** No `credentials.json` file is required (Client ID and Secret are integrated).
+*   **Multi-Threaded:** Process up to 20+ images simultaneously for maximum speed.
+*   **Smart Folder Management:** Supports single folders or complex multi-video directory structures.
+*   **Auto-Cleaning:** Automatically deletes temporary files from Google Drive after processing.
+
+---
 
 ### Requirements
 
-1.  **Python 3.7+**
-2.  **Google Cloud Project** with the Google Drive API enabled.
-3.  The following Python libraries, which can be installed via pip:
+1.  **Python 3.7+** installed on your system.
+2.  **Internet Connection** (Required for Google Drive API and initial library installation).
+3.  **Filenames with Timestamps:** For the SRT generation to work correctly, your images must follow this naming convention:  
+    `HH_MM_SS_MS__HH_MM_SS_MS.png`  
+    *(Example: `00_01_10_500__00_01_12_000.jpg`)*
 
-```sh
-pip install customtkinter
-pip install --upgrade google-api-python-client google-auth-httplib2 google-auth-oauthlib
-pip install oauth2client
-```
+---
 
 ### How to Use
 
-#### 1. Google API Setup (Crucial First Step)
-
-This application requires API credentials to communicate with your Google Drive.
-
-1.  **Create a Project:** Go to the [Google Cloud Console](https://console.cloud.google.com/) and create a new project.
-2.  **Enable Drive API:** In your project's dashboard, go to "APIs & Services" -> "Library", search for "Google Drive API", and enable it.
-3.  **Create Credentials:**
-    *   Go to "APIs & Services" -> "Credentials".
-    *   Click "Create Credentials" and select "OAuth 2.0 Client ID".
-    *   If prompted, configure the "OAuth consent screen". Select "External" and provide a name for the app (e.g., "Python OCR App"). Fill in the user support email and developer contact information. You can skip the rest of the optional scopes and test user sections.
-    *   For the "Application type", select **"Desktop app"**.
-    *   Give the client ID a name and click "Create".
-4.  **Download Credentials:** A popup will appear showing your Client ID and Secret. Click **"DOWNLOAD JSON"**.
-5.  **Rename the File:** Rename the downloaded file to **`credentials.json`** and place it in the **exact same directory** as the Python script.
-
-#### 2. Running the Application
-
-1.  **Install Libraries:** Open a terminal or command prompt and run:
+#### 1. Initial Launch
+1.  Place the script in a dedicated folder.
+2.  Run the script via terminal or command prompt:
     ```sh
-pip install customtkinter
-pip install --upgrade google-api-python-client google-auth-httplib2 google-auth-oauthlib
-pip install oauth2client
+    python "Batch-Google-Docs-OCR.py"
     ```
-2.  **Launch the Script:** Run the Python script from your terminal:
-    ```sh
-    python Batch-Google-Docs-OCR.py
-    ```
-3.  **First-Time Authentication:** On the first run, a browser window will open asking you to authorize the application to access your Google Drive. Grant the necessary permissions. This will create a `token.json` file in the same directory, which stores your authorization for future use.
+3.  **Automatic Installation:** On the first run, the script will detect missing libraries (`customtkinter`, `google-api-python-client`, etc.) and install them automatically. Wait for the "All libraries installed successfully!" message.
 
-#### 3. Using the GUI
+#### 2. Google Authentication
+1.  When you click **"Start Processing"** for the first time, your default web browser will open.
+2.  Log in with your Google Account.
+3.  You may see a "Google hasn't verified this app" warning (because the Client ID is for personal use). Click **"Advanced"** and then **"Go to Python OCR (unsafe)"** to proceed.
+4.  Grant the requested permissions.
+5.  A `token.json` file will be created in your folder. You won't need to log in again unless you delete this file.
 
-1.  **Processing Mode:**
-    *   **Single Folder:** Choose this if you want to process all images located directly inside the selected "Source Folder".
-    *   **Multi-Folder:** Choose this if the "Source Folder" contains multiple subfolders, each representing a separate image sequence.
+#### 3. Configuring the GUI
 
-2.  **Subfolder Structure (for Multi-Folder Mode):**
-    *   `None (Directly inside)`: Select this if the images are directly inside each subfolder (e.g., `Source/Video1_Frames/`, `Source/Video2_Frames/`).
-    *   `RGBImages` or `TXTImages`: Select this if the images are nested one level deeper (e.g., `Source/Video1/RGBImages/`, `Source/Video2/RGBImages/`).
+*   **Mode Selection:**
+    *   **Single Folder:** Use this if all your images are inside one folder.
+    *   **Multi-Folder:** Use this if you have a main directory containing several subfolders (e.g., Video1, Video2), and you want a separate SRT for each.
+*   **Subfolder Structure:**
+    *   If your images are inside a specific sub-directory (like `RGBImages`), select that option from the dropdown menu.
+*   **Paths:**
+    *   **Source Folder:** Where your images are located.
+    *   **Output Folder:** Where the final `.srt` files will be saved.
+*   **Drive Folder ID (Highly Recommended):** 
+    *   To keep your Google Drive clean, create an empty folder on Google Drive, copy its ID from the URL (the long string of letters and numbers), and paste it into the **Drive Folder ID** field.
+*   **Threads:** 
+    *   Default is **20**. If you have a very fast internet connection, you can increase this; if the app crashes or hits rate limits, decrease it.
 
-3.  **Choose Folders:**
-    *   **Source Folder:** Click "Browse..." to select the folder containing your images or subfolders of images.
-    *   **Output Folder:** Click "Browse..." to select the destination folder where the final `.srt` subtitle files will be saved.
+#### 4. Execution
+1.  Click **Start Processing**.
+2.  The **Log Box** will show real-time updates for every image being uploaded, converted, and downloaded.
+3.  Once finished, your SRT files will be ready in the Output Folder, and two local folders (`raw_texts` and `texts`) will contain the OCR transcriptions for your reference.
 
-4.  **Configure Settings:**
-    *   **Google Drive Folder ID (Optional):** You can provide a specific Google Drive folder ID. This will cause all temporary OCR files to be uploaded to that folder instead of your Drive's root directory, keeping it clean.
-    *   **Threads:** Adjust the number of concurrent threads. A higher number can improve performance but may be limited by your internet connection and API rate limits. The default is 20.
+---
 
-5.  **Start Processing:** Click the **"Start Processing"** button. The application will begin processing, and you can monitor its progress in the log window and with the progress bar.
+### Troubleshooting
+*   **500 Internal Error:** The script has built-in retry logic. It will automatically attempt to re-process an image if Google’s server fails momentarily.
