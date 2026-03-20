@@ -11,6 +11,7 @@ A multi-threaded GUI application for batch OCR using the Google Drive API. It pr
 <img width="819" height="854" alt="Screenshot_2026-03-20_18-43-11" src="https://github.com/user-attachments/assets/a016ab08-dc62-4544-9541-c0de16bf08b5" />
 
 
+
 ### Key Features
 *   **Zero-Config Setup:** No need to manually install libraries; the script handles dependencies on the first run.
 *   **Built-in Credentials:** No `credentials.json` file is required (Client ID and Secret are integrated).
