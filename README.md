@@ -8,8 +8,8 @@ A multi-threaded GUI application for batch OCR using the Google Drive API. It pr
 
 ##Main Tool interface##
 
-<img width="819" height="854" alt="Screenshot_2026-03-20_18-43-11" src="https://github.com/user-attachments/assets/a016ab08-dc62-4544-9541-c0de16bf08b5" />
 
+<img width="816" height="849" alt="Screenshot_2026-03-20_19-11-39" src="https://github.com/user-attachments/assets/a11ff848-ae1e-4b3a-81db-60d0ff360739" />
 
 
 ### Key Features
